@@ -28,11 +28,15 @@ class Item:
 
     @name.setter
     def name(self, new_name):
-        if len(new_name) < 10:
+        """Проверка длины наименования товара, которая должна быть не больше 10"""
+        if len(new_name) >= 10:
+            raise ValueError('More than 10 letters in the name')
+        else:
             self.__name = new_name
 
     @classmethod
     def instantiate_from_csv(cls):
+        """класс-метод, инициализирующий экземпляры класса `Item` данными из файла _src/items.csv"""
         cls.all.clear()
         with open("src/items.csv", "r", encoding='windows-1251') as f:
             data = csv.DictReader(f)
@@ -41,6 +45,7 @@ class Item:
 
     @staticmethod
     def string_to_number(num):
+        """Статический метод, возвращающий число из числа-строки"""
         return int(float(num))
 
     def calculate_total_price(self) -> float:
