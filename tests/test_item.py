@@ -1,4 +1,5 @@
 """Здесь надо написать тесты с использованием pytest для модуля item."""
+import pytest
 
 from src.item import Item
 
@@ -15,7 +16,10 @@ def test_apply_discount():
 
 
 def test_name():
-    assert item1.name == 'Смартфон'
+    item1 = Item('Смартфон', 1000, 1)
+
+    with pytest.raises(ValueError):
+        item1.name = 'СуперСмартфон'
 
 
 def test_string_to_number(test_num):
