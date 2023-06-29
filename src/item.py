@@ -22,6 +22,14 @@ class Item:
 
         self.all.append(self)
 
+    def __repr__(self):
+        """Магический метод для вывода инфо о классе для разработчика"""
+        return f"{self.__class__.__name__}('{self.__name}', {self.price}, {self.quantity})"
+
+    def __str__(self):
+        """Магический метод для вывода инфо о классе для пользователя"""
+        return f"{self.__name}"
+
     @property
     def name(self):
         return self.__name
@@ -30,7 +38,7 @@ class Item:
     def name(self, new_name):
         """Проверка длины наименования товара, которая должна быть не больше 10"""
         if len(new_name) >= 10:
-            raise ValueError('More than 10 letters in the name')
+            raise ValueError('Длина наименования товара превышает 10 символов')
         else:
             self.__name = new_name
 
