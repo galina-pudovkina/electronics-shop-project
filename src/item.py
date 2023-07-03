@@ -18,21 +18,27 @@ class Item:
         """
         self.quantity = quantity
         self.price = price
-        self.__name = name
+        self._name = name
 
         self.all.append(self)
 
     def __repr__(self):
         """Магический метод для вывода инфо о классе для разработчика"""
-        return f"{self.__class__.__name__}('{self.__name}', {self.price}, {self.quantity})"
+        return f"{self.__class__.__name__}('{self._name}', {self.price}, {self.quantity})"
 
     def __str__(self):
         """Магический метод для вывода инфо о классе для пользователя"""
-        return f"{self.__name}"
+        return f"{self._name}"
+
+    def __add__(self, other):
+        """Реализует сложение по кол-ву товара в магазине классов Item и Phone"""
+        if issubclass(other.__class__, self.__class__):
+            return self.quantity + other.quantity
+        raise ValueError("Возможно сложение только экземпляров класса Item и класса Phone")
 
     @property
     def name(self):
-        return self.__name
+        return self._name
 
     @name.setter
     def name(self, new_name):
@@ -40,7 +46,7 @@ class Item:
         if len(new_name) >= 10:
             raise ValueError('Длина наименования товара превышает 10 символов')
         else:
-            self.__name = new_name
+            self._name = new_name
 
     @classmethod
     def instantiate_from_csv(cls):
