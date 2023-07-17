@@ -63,7 +63,7 @@ class Item:
             data = csv.DictReader(f)
             if len(data.fieldnames) != 3:
                 raise InstantiateCSVError("Файл items.csv поврежден")
-            if file != '../src/items.csv':
+            if not file:
                 raise FileNotFoundError("Отсутствует файл items.csv")
             for row in data:
                 cls(row['name'], cls.string_to_number(row['price']), cls.string_to_number(row['quantity']))
