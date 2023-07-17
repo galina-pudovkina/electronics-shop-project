@@ -3,6 +3,7 @@ import pytest
 
 from src.item import Item
 from src.phone import Phone
+from src.item import InstantiateCSVError
 
 
 def test_calculate_total_price():
@@ -43,3 +44,13 @@ def test_add():
     phone1 = Phone("iPhone 14", 120_000, 5, 2)
     assert item1 + phone1 == 25
     assert item1 + item2 == 30
+
+
+def test_instantiate_from_csv():
+    with pytest.raises(FileNotFoundError):
+        Item.instantiate_from_csv(file="src.csv")
+
+
+def test_test_instantiate_from_csv2():
+    with pytest.raises(InstantiateCSVError):
+        Item.instantiate_from_csv(file="../src/items2.csv")
