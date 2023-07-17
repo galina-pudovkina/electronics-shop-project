@@ -1,4 +1,10 @@
+import os
+
 import csv
+
+
+class InstantiateCSVError(Exception):
+    """Класс исключения при окрытии файла items.csv"""
 
 
 class Item:
@@ -50,11 +56,15 @@ class Item:
             self._name = new_name
 
     @classmethod
-    def instantiate_from_csv(cls):
+    def instantiate_from_csv(cls, file='../src/items.csv'):
         """класс-метод, инициализирующий экземпляры класса `Item` данными из файла _src/items.csv"""
         cls.all.clear()
-        with open("src/items.csv", "r", encoding='windows-1251') as f:
+        with open(file, "r", encoding='windows-1251') as f:
             data = csv.DictReader(f)
+            if len(data.fieldnames) != 3:
+                raise InstantiateCSVError("Файл items.csv поврежден")
+            if file != '../src/items.csv':
+                raise FileNotFoundError("Отсутствует файл items.csv")
             for row in data:
                 cls(row['name'], cls.string_to_number(row['price']), cls.string_to_number(row['quantity']))
 
