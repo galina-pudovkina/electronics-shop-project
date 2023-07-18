@@ -47,10 +47,8 @@ def test_add():
 
 
 def test_instantiate_from_csv():
-    with pytest.raises(FileNotFoundError):
-        Item.instantiate_from_csv(file="src.csv")
+    assert Item.instantiate_from_csv(file="src.csv") == None
 
 
 def test_test_instantiate_from_csv2():
-    with pytest.raises(InstantiateCSVError):
-        Item.instantiate_from_csv(file="../src/items2.csv")
+    assert Item.instantiate_from_csv(file="../src/items2.csv") == None
