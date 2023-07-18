@@ -59,14 +59,17 @@ class Item:
     def instantiate_from_csv(cls, file='../src/items.csv'):
         """класс-метод, инициализирующий экземпляры класса `Item` данными из файла _src/items.csv"""
         cls.all.clear()
-        with open(file, "r", encoding='windows-1251') as f:
-            data = csv.DictReader(f)
-            if len(data.fieldnames) != 3:
-                raise InstantiateCSVError("Файл items.csv поврежден")
-            if not file:
-                raise FileNotFoundError("Отсутствует файл items.csv")
+        try:
+            with open(file, "r", encoding='windows-1251') as f:
+                data = csv.DictReader(f)
+                if len(data.fieldnames) != 3:
+                    raise InstantiateCSVError
             for row in data:
                 cls(row['name'], cls.string_to_number(row['price']), cls.string_to_number(row['quantity']))
+        except FileNotFoundError:
+            print("Отсутствует файл items.csv")
+        except InstantiateCSVError:
+            print("Файл items.csv поврежден")
 
     @staticmethod
     def string_to_number(num):
@@ -88,3 +91,6 @@ class Item:
         new_price = self.price * self.pay_rate
         self.price = new_price
         return self.price
+
+
+print(Item.instantiate_from_csv(file="src.csv"))
